@@ -1,5 +1,6 @@
 package br.edu.ifma.felipe.appavaliafilme;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +9,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
+
+import dao.DAOAvaliaFilme;
+import modelo.AvaliaFilme;
 
 public class FormAvaliacao extends AppCompatActivity implements View.OnClickListener {
 
@@ -18,6 +23,7 @@ public class FormAvaliacao extends AppCompatActivity implements View.OnClickList
     private EditText txtDescricao;
     private Button btnSalvar;
     private Button btnListar;
+    private DAOAvaliaFilme dao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +44,8 @@ public class FormAvaliacao extends AppCompatActivity implements View.OnClickList
         btnListar.setOnClickListener(this);
         ArrayAdapter<String> adapterGeneros = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item,generos);
         spnGeneros.setAdapter(adapterGeneros);
+
+        dao = new DAOAvaliaFilme(this);
     }
 
     @Override
@@ -48,6 +56,9 @@ public class FormAvaliacao extends AppCompatActivity implements View.OnClickList
         switch (idBotaoClicado) {
             case R.id.btnSalvar:
                 recebeDados();
+                break;
+            case R.id.btnListar:
+                listaFilmes();
                 break;
         }
     }
@@ -83,5 +94,25 @@ public class FormAvaliacao extends AppCompatActivity implements View.OnClickList
                 break;
         }
 
+        AvaliaFilme af = new AvaliaFilme();
+        af.setNome(nome);
+        af.setAno(ano);
+        af.setGenero(genero);
+        af.setNota(nota);
+        af.setDescricao(descricao);
+
+        String msg = "Filme adicionado com sucesso";
+        boolean result = dao.salvar(af);
+
+        if(!result) {
+            msg = "Erro ao salvar";
+        }
+
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+    }
+
+    public void listaFilmes(){
+        Intent it = new Intent(this, ListaFilmes.class);
+        startActivity(it);
     }
 }
