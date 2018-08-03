@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -41,6 +43,14 @@ public class AdapterFilmes extends BaseAdapter {
 
         TextView nameFilme = view.findViewById(R.id.nameFilme);
         nameFilme.setText(filme.getNome());
+
+        LinearLayout layout = view.findViewById(R.id.layoutImagem);
+
+        for(int i = 0;i < filme.getNota();i++) {
+            ImageView imageView = new ImageView(view.getContext());
+            imageView.setImageResource(R.drawable.if_star);
+            layout.addView(imageView);
+        }
 
         return view;
     }

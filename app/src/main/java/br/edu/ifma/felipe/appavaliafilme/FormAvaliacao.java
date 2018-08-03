@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -23,6 +24,7 @@ public class FormAvaliacao extends AppCompatActivity implements View.OnClickList
     private EditText txtDescricao;
     private Button btnSalvar;
     private Button btnListar;
+    private Button btnLimpar;
     private DAOAvaliaFilme dao;
 
     @Override
@@ -39,9 +41,11 @@ public class FormAvaliacao extends AppCompatActivity implements View.OnClickList
         txtDescricao = findViewById(R.id.txtDescricao);
         btnSalvar = findViewById(R.id.btnSalvar);
         btnListar = findViewById(R.id.btnListar);
+        btnLimpar = findViewById(R.id.btnLimpar);
 
         btnSalvar.setOnClickListener(this);
         btnListar.setOnClickListener(this);
+        btnLimpar.setOnClickListener(this);
         ArrayAdapter<String> adapterGeneros = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item,generos);
         spnGeneros.setAdapter(adapterGeneros);
 
@@ -59,6 +63,9 @@ public class FormAvaliacao extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.btnListar:
                 listaFilmes();
+                break;
+            case R.id.btnLimpar:
+                limparForm();
                 break;
         }
     }
@@ -114,5 +121,15 @@ public class FormAvaliacao extends AppCompatActivity implements View.OnClickList
     public void listaFilmes(){
         Intent it = new Intent(this, ListaFilmes.class);
         startActivity(it);
+    }
+
+    public void limparForm()
+    {
+        txtNome.setText(null);
+        txtAno.setText(null);
+        txtDescricao.setText(null);
+        RadioButton radioChecked = findViewById(rdEstrelas.getCheckedRadioButtonId());
+        radioChecked.setChecked(false);
+
     }
 }

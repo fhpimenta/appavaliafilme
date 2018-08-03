@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import dao.DAOAvaliaFilme;
@@ -14,7 +16,7 @@ import modelo.AvaliaFilme;
 public class MostrarDados extends AppCompatActivity {
 
     private TextView txtNome;
-    private TextView txtNota;
+    private LinearLayout layoutNota;
     private TextView txtAno;
     private TextView txtDescricao;
     private TextView txtGenero;
@@ -42,14 +44,19 @@ public class MostrarDados extends AppCompatActivity {
         txtNome = findViewById(R.id.txtNomeConteudo);
         txtAno = findViewById(R.id.txtAnoConteudo);
         txtGenero = findViewById(R.id.txtGeneroConteudo);
-        txtNota = findViewById(R.id.txtNotaConteudo);
+        layoutNota = findViewById(R.id.layoutNotaConteudo);
         txtDescricao = findViewById(R.id.txtDescricaoConteudo);
 
         txtNome.setText(nome);
         txtAno.setText(ano);
         txtGenero.setText(genero);
-        txtNota.setText(String.valueOf(nota));
         txtDescricao.setText(descricao);
+
+        for(int i = 0;i < nota;i++) {
+            ImageView imageView = new ImageView(this);
+            imageView.setImageResource(R.drawable.if_star);
+            layoutNota.addView(imageView);
+        }
 
     }
 
